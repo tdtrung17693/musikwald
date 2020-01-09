@@ -1,0 +1,18 @@
+<div class="spacing-container">
+    <aside class="admin-pill-nav rounded">
+        <a class="nav-item" routerLink="general" routerLinkActive="selected"><div class="name" trans>General</div></a>
+        <a class="nav-item" routerLink="player" routerLinkActive="selected"><div class="name">Player</div></a>
+        <a class="nav-item" routerLink="localization" routerLinkActive="selected"><div class="name" trans>Localization</div></a>
+        <a class="nav-item" routerLink="authentication" routerLinkActive="selected"><div class="name" trans>Authentication</div></a>
+        <a class="nav-item" routerLink="uploading" routerLinkActive="selected"><div class="name" trans>Uploading</div></a>
+        <a class="nav-item" routerLink="cache" routerLinkActive="selected"><div class="name" trans>Cache</div></a>
+        <a class="nav-item" routerLink="analytics" routerLinkActive="selected"><div class="name" trans>Analytics</div></a>
+        <a class="nav-item" routerLink="logging" routerLinkActive="selected"><div class="name" trans>Logging</div></a>
+        <a class="nav-item" routerLink="queue" routerLinkActive="selected"><div class="name" trans>Queue</div></a>
+        <a class="nav-item" routerLink="recaptcha" routerLinkActive="selected"><div class="name" trans>Recaptcha</div></a>
+    </aside>
+
+    <div class="settings-panels-container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

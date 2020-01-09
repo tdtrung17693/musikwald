@@ -1,0 +1,62 @@
+<div class="panel">
+    <form class="edit-main-info" (ngSubmit)="createOrUpdate()" ngNativeValidate>
+        <div class="left-col">
+            <img [src]="getArtistImage()">
+            <button type="submit" mat-raised-button color="accent" class="main-button" *ngIf="artist.id" trans>Update</button>
+            <button type="submit" mat-raised-button color="accent" class="main-button" *ngIf="!artist.id" trans>Create</button>
+        </div>
+        <div class="right-col many-inputs admin-artist-edit-inputs">
+            <div class="input-container">
+                <label for="artist-name" trans>Name</label>
+                <input type="text" [(ngModel)]="artist.name" id="artist-name" name="name" required>
+                <div class="error" *ngIf="errors.name">{{errors.name}}</div>
+            </div>
+                <input type="hidden" [(ngModel)]="artist.spotify_popularity" id="artist-popularity" name="popularity" min="1" max="100" value="1">
+            <div class="input-container with-addon">
+                <label for="small-image" trans>Small Image</label>
+                <button type="button" class="no-style addon" (click)="openInsertImageModal('small')" [matTooltip]="'Upload image' | trans">
+                    <mat-icon svgIcon="file-upload"></mat-icon>
+                </button>
+                <input type="url" [(ngModel)]="artist.image_small" id="small-image" name="image_small">
+                <div class="error" *ngIf="errors.image_small">{{errors.image_small}}</div>
+            </div>
+            <div class="input-container with-addon">
+                <label for="large_image" trans>Large Image</label>
+                <button type="button" class="no-style addon" (click)="openInsertImageModal('large')" [matTooltip]="'Upload image' | trans">
+                    <mat-icon svgIcon="file-upload"></mat-icon>
+                </button>
+                <input type="url" [(ngModel)]="artist.image_large" id="large_image" name="image_large">
+                <div class="error" *ngIf="errors.image_large">{{errors.image_large}}</div>
+            </div>
+            <div class="input-container">
+                <label for="genres" trans>Genres</label>
+                <input type="text" [(ngModel)]="genre" (blur)="addGenre()" enterKeybind id="genres" name="genres" placeholder="Add new..." trans-placeholder>
+                <mat-chip-list class="genres">
+                    <mat-chip class="genre" *ngFor="let genre of artist.genres" [selectable]="false" (removed)="removeGenre(genre)">
+                        <span>{{genre.name}}</span>
+                       <mat-icon svgIcon="cancel" matChipRemove></mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="input-container">
+                <label for="auto-update" trans>Auto Update</label>
+                <select name="auto-update" id="auto-update" [(ngModel)]="artist.auto_update">
+                    <option [ngValue]="true" trans>Yes</option>
+                    <option [ngValue]="false" trans>No</option>
+                </select>
+                <p trans>Whether this artist data (bio, discography, images etc.) should be updated periodically.</p>
+            </div>
+            <div class="input-container">
+                <label for="biography" trans>Biography</label>
+                <textarea name="biography" id="biography" [(ngModel)]="bio.text"></textarea>
+            </div>
+            <div class="input-container">
+                <label for="bio-images" trans>Biography Images</label>
+                <textarea name="bio-images" id="bio-images" [(ngModel)]="bio.images"></textarea>
+                <p trans>Separate images with a new line (enter).</p>
+            </div>
+        </div>
+    </form>
+
+    <artist-albums-table [artist]="artist"></artist-albums-table>
+</div>

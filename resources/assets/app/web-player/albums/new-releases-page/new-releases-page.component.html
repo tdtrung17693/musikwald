@@ -1,0 +1,16 @@
+<filterable-page-header [filterQuery]="filterQuery" class="margin">
+    <span trans>New Releases</span>
+</filterable-page-header>
+
+<ad-host slot="ads.general_top"></ad-host>
+
+<media-grid>
+    <album-item *ngFor="let album of filteredItems" [album]="album" [contextMenu]="{item: album, type: 'album'}"></album-item>
+</media-grid>
+
+<no-results-message *ngIf="!filteredItems || ! filteredItems.length">
+    <span primary-text trans>No new releases found.</span>
+    <span secondary-text trans>Could not find any new releases. Please try again later.</span>
+</no-results-message>
+
+<ad-host slot="ads.general_bottom" class="margin-bottom"></ad-host>

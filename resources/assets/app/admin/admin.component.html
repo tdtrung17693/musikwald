@@ -1,0 +1,76 @@
+<material-navbar menuPosition="admin-navbar" [showToggleButton]="true" (toggleButtonClick)="toggleLeftSidebar()"></material-navbar>
+
+<mat-sidenav-container class="admin-page-content">
+    <mat-sidenav [opened]="!leftColumnIsHidden" [mode]="(breakpoints.isMobile$ | async) ? 'over' : 'side'" [fixedInViewport]="true" [fixedTopGap]="70" class="left-column">
+        <div class="menu-items">
+            <a class="menu-item" routerLink="settings" *ngIf="currentUser.hasPermission('settings.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="settings"></mat-icon>
+                <span trans>Settings</span>
+            </a>
+
+            <a class="menu-item" routerLink="artists" *ngIf="currentUser.hasPermission('artists.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="mic"></mat-icon>
+                <span>Artists</span>
+            </a>
+
+            <a class="menu-item" routerLink="albums" *ngIf="currentUser.hasPermission('albums.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="album"></mat-icon>
+                <span>Albums</span>
+            </a>
+
+            <a class="menu-item" routerLink="tracks" *ngIf="currentUser.hasPermission('tracks.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="audiotrack"></mat-icon>
+                <span>Tracks</span>
+            </a>
+
+            <a class="menu-item" routerLink="pending-tracks"  routerLinkActive="router-link-active">
+                <mat-icon svgIcon="audiotrack"></mat-icon>
+                <span>Pending Tracks</span>
+            </a>
+
+            <a class="menu-item" routerLink="reports"  routerLinkActive="router-link-active">
+                <mat-icon svgIcon="feedback"></mat-icon>
+                <span>Reports</span>
+            </a>
+
+            <a class="menu-item" routerLink="genres" *ngIf="currentUser.hasPermission('tracks.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="local-offer"></mat-icon>
+                <span>Genres</span>
+            </a>
+
+            <a class="menu-item" routerLink="lyrics" *ngIf="currentUser.hasPermission('lyrics.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="queue-music"></mat-icon>
+                <span>Lyrics</span>
+            </a>
+
+            <a class="menu-item" routerLink="playlists" *ngIf="currentUser.hasPermission('playlists.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="playlist-play"></mat-icon>
+                <span>Playlists</span>
+            </a>
+
+            <a class="menu-item" routerLink="users" *ngIf="currentUser.hasPermission('users.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="person"></mat-icon>
+                <span trans>Users</span>
+            </a>
+            <a class="menu-item" routerLink="roles" *ngIf="currentUser.hasPermission('roles.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="people"></mat-icon>
+                <span trans>Roles</span>
+            </a>
+            <a class="menu-item" routerLink="files" *ngIf="currentUser.hasPermission('files.view')" routerLinkActive="router-link-active">
+                <mat-icon svgIcon="insert-drive-file"></mat-icon>
+                <span trans>Files</span>
+            </a>
+<!--            <a class="menu-item" routerLink="translations" *ngIf="currentUser.hasPermission('localizations.view')" routerLinkActive="router-link-active">-->
+<!--                <mat-icon svgIcon="translate"></mat-icon>-->
+<!--                <span trans>Translations</span>-->
+<!--            </a>-->
+        </div>
+        <div class="version">
+            Version: {{settings.get('version')}}
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="content-inner">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

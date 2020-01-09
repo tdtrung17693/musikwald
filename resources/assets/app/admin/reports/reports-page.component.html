@@ -1,0 +1,44 @@
+<data-table [dataSource]="dataSource" itemsName="reports" matSort>
+    <button mat-icon-button (click)="maybeDeleteSelectedReports()" *ngIf="currentUser.hasPermission('admin')" headerSelectedActions>
+        <mat-icon svgIcon="delete"></mat-icon>
+    </button>
+    <ng-container matColumnDef="reportedTrack">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Reported Track</mat-header-cell>
+        <mat-cell *matCellDef="let report"><a [routerLink]="urls.track(report.track)">{{report.track.name}}</a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="artists">
+        <mat-header-cell *matHeaderCellDef>Artists</mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{report.track ? report.track.artists.join(', ') : '-'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="reportType">
+        <mat-header-cell *matHeaderCellDef>Report Type</mat-header-cell>
+        <mat-cell *matCellDef="let report">
+            {{
+                getReportTypeText(report.type)
+            }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="viewed">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Viewed</mat-header-cell>
+        <mat-cell *matCellDef="let report">
+            <mat-icon svgIcon="check" *ngIf="report.viewed"></mat-icon>
+            <mat-icon svgIcon="remove-circle" *ngIf="!report.viewed"></mat-icon>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let report">
+            <button mat-icon-button (click)="openReportItemDetail(report)" *ngIf="currentUser.hasPermission('admin')" [matTooltip]="'View Details'">
+                <mat-icon svgIcon="remove-red-eye"></mat-icon>
+            </button>
+            <button mat-icon-button (click)="markAsViewed(report)" *ngIf="currentUser.hasPermission('tracks.update')" [matTooltip]="'Mark as Viewed'">
+                <mat-icon svgIcon="check"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+</data-table>

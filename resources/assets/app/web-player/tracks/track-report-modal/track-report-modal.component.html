@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h2 mat-dialog-title>
+        <span *ngIf="!model.id" trans>New Report</span>
+    </h2>
+    <button type="button" (click)="close()" class="close-button" mat-icon-button tabindex="-1">
+        <mat-icon svgIcon="close"></mat-icon>
+    </button>
+</div>
+
+<form (ngSubmit)="confirm()" ngNativeValidate>
+   <mat-dialog-content customScrollbar>
+       <div class="many-inputs">
+           <div class="input-container type-input">
+               <label >Report Type:</label>
+               <mat-radio-group
+                   aria-labelledby="example-radio-group-label"
+                   class="example-radio-group"
+                   [(ngModel)]="model.type"
+                    name="type">
+                   <mat-radio-button [value]="0">
+                       Violate T&C
+                   </mat-radio-button>
+                   <mat-radio-button [value]="1">
+                       Bad Quality
+                   </mat-radio-button>
+                   <mat-radio-button [value]="2">
+                       Other
+                   </mat-radio-button>
+               </mat-radio-group>
+           </div>
+           <div class="input-container additional-info-input" *ngIf="model.type == 2">
+               <label for="additional-info">Additional Info</label>
+               <textarea name="additional-info" id="additional-info" [(ngModel)]="model.additional_info"></textarea>
+           </div>
+       </div>
+   </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <button (click)="close()" type="button" class="cancel-button" mat-button trans>Close</button>
+        <button type="submit" class="submit-button" mat-raised-button color="accent" [disabled]="loading">
+            <span *ngIf="!model.id" trans>Create</span>
+            <span *ngIf="model.id" trans>Update</span>
+        </button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,112 @@
+import {Injectable} from '@angular/core';
+import {Player} from '../player/player.service';
+import {Playlist} from '../../models/Playlist';
+import {Track} from '../../models/Track';
+import {Playlists} from './playlists.service';
+import {MediaItem} from '../media-item.service';
+import {Settings} from 'shared/config/settings.service';
+import {User} from 'shared/types/models/User';
+import {WebPlayerImagesService} from '../web-player-images.service';
+
+@Injectable()
+export class PlaylistService extends MediaItem<Playlist> {
+
+    /**
+     * Total duration of playlist in milliseconds.
+     */
+    public totalDuration: number;
+
+    /**
+     * Total number of tracks attached to playlist.
+     */
+    public tracksCount: number;
+
+    constructor(
+        protected playlists: Playlists,
+        protected player: Player,
+        protected settings: Settings,
+        public images: WebPlayerImagesService,
+    ) {
+        super(player);
+    }
+
+    public init(id: number, params = {}): Promise<any> {
+        this.bindToPlaylistEvents();
+
+        return super.init(id, params).then(data => {
+            this.totalDuration = data.totalDuration;
+            this.tracksCount = data.playlist.tracks_count;
+            return data;
+        });
+    }
+
+    /**
+     * Get playlist tracks for player queue.
+     */
+    public getTracks(paginatedData?: Track[]) {
+        return paginatedData || this.paginatedData;
+    }
+
+    /**
+     * Get playlist creator.
+     */
+    public getCreator(): User {
+        return this.item.editors[0];
+    }
+
+    /**
+     * Get playlist image or first album image.
+     */
+    public getImage() {
+        if (this.item.image) return this.item.image;
+        if (this.getTracks().length) return this.images.getTrackImage(this.getTracks()[0]);
+        return this.images.getDefault('artist');
+    }
+
+    /**
+     * Load playlist from backend.
+     */
+    protected loadItem(id: number): Promise<any> {
+        return this.playlists.get(id).toPromise().then(response => {
+            this.setItem(response.playlist, response.tracks);
+            return response;
+        });
+    }
+
+    /**
+     * Load next playlist tracks page.
+     */
+    protected loadNextPage(id: number, page: number) {
+        return this.playlists.loadMoreTracks(id, page);
+    }
+
+    /**
+     * Add or remove tracks from playlist when events are fired.
+     */
+    public bindToPlaylistEvents() {
+        this.unsubscribe();
+
+        // add tracks
+        const sub1 = this.playlists.addedTracks$.subscribe(data => {
+            if (data.id !== this.item.id) return;
+            this.paginatedData = data.tracks.concat(this.paginatedData);
+        });
+
+        // remove tracks
+        const sub2 = this.playlists.removedTracks$.subscribe(data => {
+            if (data.id !== this.item.id) return;
+
+            data.tracks.forEach(track => {
+                const i = this.paginatedData.findIndex(curr => curr.id === track.id);
+                this.paginatedData.splice(i, 1);
+            });
+        });
+
+        // update playlist
+        const sub3 = this.playlists.updated$.subscribe(playlist => {
+            this.item = playlist;
+        });
+
+        this.subscriptions = this.subscriptions.concat([sub1, sub2, sub3]);
+    }
+}

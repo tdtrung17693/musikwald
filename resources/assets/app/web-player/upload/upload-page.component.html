@@ -1,0 +1,75 @@
+<div class="upload-title">
+    Upload Track
+</div>
+<section class="upload-area-wrap">
+    <div class="upload-area" fileDropzone (filesDropped)="onFileDropEvent($event)" [uploadInputConfig]="uploadInputConfig">
+        <div class="mar-bottom-20 mar-top-10">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="100" height="100">
+                <path d="M63.1,31.09a9.1,9.1,0,0,1,.91,0,10.22,10.22,0,1,1,0,20.43" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
+                <line x1="50.41" y1="51.48" x2="64.01" y2="51.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
+                <path d="M30.76,24.34a15.3,15.3,0,1,0-9.68,27.14h8.38" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
+                <path d="M25.86,21.65a19.94,19.94,0,0,1,37.25,9.9,19.71,19.71,0,0,1-.73,5.36" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
+                <polygon points="47.91 68.39 47.91 59.8 56.48 59.8 39.94 37.12 23.4 59.8 31.96 59.8 31.96 68.39 47.91 68.39" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" /></svg>
+        </div>
+        <div class="content-upload">Drop your file here<div class="sub-content">or</div>
+        </div>
+        <div class="choose-file-btn mar-bottom-30">
+            <input type="file" id="upload-song-input" accept="audio/*" multiple=""><label for="upload-song-input"><span>Select a file</span></label></div>
+    </div>
+    <div class="upload-items" *ngIf="uploadItems.length > 0">
+        <div class="items">
+            <div *ngFor="let item of uploadItems" class="item">
+                <div class="item__header">
+                    <div class="item__name">{{ item.track.name }}</div>
+                    <mat-icon aria-hidden="false" aria-label="Delete item" svgIcon="clear"></mat-icon>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="item.queueItem.meta$.value.progress" color="accent"></mat-progress-bar>
+                <div class="item__content">
+                    <div class="item__thumbnail">
+                        <img [src]="wpImages.getDefault('album')" [lazyLoad]="wpImages.getDefault('album')" class="lazy-loaded">
+                    </div>
+                    <div class="item__meta">
+                        <form (ngSubmit)="confirm(item)" ngNativeValidate *ngIf="!item.track.id; else elseBlock">
+                            <div class="input-container">
+                                <label for="track-name" trans>Name</label>
+                                <input type="text" name="name" [(ngModel)]="item.track.name" required>
+                                <div class="error" *ngIf="item.errors.name">{{item.errors.name}}</div>
+                            </div>
+                            <div class="input-container media-autocomplete-input-container">
+                                <label for="track-artists">Artists</label>
+                                <input type="text" [formControl]="item.artistInput.formControl" [matAutocomplete]="artistAuto" placeholder="Search artists..." trans-placeholder>
+                                <mat-chip-list #chipsList [selectable]="false">
+                                    <mat-chip *ngFor="let artist of item.artistInput.attachedArtists" [removable]="true" (removed)="detachArtist(item, artist)">
+                                        {{artist}}
+                                        <mat-icon svgIcon="cancel" matChipRemove></mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
+                                <mat-autocomplete #artistAuto="matAutocomplete" class="media-autocomplete-panel" (optionSelected)="attachArtist($event, item)">
+                                    <mat-option *ngFor="let artist of item.artistInput.searchResults | async" [value]="artist.name">
+                                        <img [src]="artist.image_small">
+                                        <span>{{ artist.name }}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <div class="error" *ngIf="item.errors.artists">{{item.errors.artists}}</div>
+                            </div>
+                            <div class="item__footer">
+                                <button type="submit" class="item__btn-save">Save</button>
+                            </div>
+                        </form>
+                        <ng-template #elseBlock>
+                            <div class="item__saved-name">{{ item.track.name }}</div>
+                            <div class="item__saved-artists" *ngIf="item.track.artists; else elseBlock">{{ item.track.artists }}</div>
+                            <ng-template #elseBlock>
+                                <div class="item__saved-artists" *ngIf="!item.track.artists; else elseBlock">Unknown Artist</div>
+                                <ng-template  #elseBlock><div class="item__saved-artists">{{ item.track.artists }}</div></ng-template>
+                            </ng-template>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="upload-items-footer">
+            <button class="btn-save-all">Save All</button>
+        </div>
+    </div>
+</section>

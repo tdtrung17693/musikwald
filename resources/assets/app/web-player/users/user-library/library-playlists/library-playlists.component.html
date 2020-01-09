@@ -1,0 +1,14 @@
+<div class="playlists">
+    <div class="playlist" *ngFor="let playlist of playlists">
+        <a [routerLink]="urls.playlist(playlist)">
+            <img [src]="getImage(playlist)">
+            <div class="name">
+                <div>{{playlist.name}}</div>
+                <div class="tracks-count">{{playlist['tracks_count']}} <span trans>Songs</span></div>
+            </div>
+        </a>
+        <button class="no-style options-button" (click)="showContextMenu(playlist, $event)">
+            <mat-icon svgIcon="more-vert"></mat-icon>
+        </button>
+    </div>
+</div>

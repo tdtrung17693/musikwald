@@ -1,0 +1,15 @@
+@import "variables";
+
+library-tracks {
+  display: block;
+  padding: 20px;
+
+  filterable-page-header {
+    margin-bottom: 15px;
+  }
+
+  no-results-message {
+    margin-top: 25px;
+
+  }
+}

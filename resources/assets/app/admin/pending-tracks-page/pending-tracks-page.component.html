@@ -1,0 +1,39 @@
+<data-table [dataSource]="dataSource" itemsName="tracks" matSort>
+    <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef trans>Image</mat-header-cell>
+        <mat-cell *matCellDef="let track"><img [src]="images.getTrackImage(track)"> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header trans>Name</mat-header-cell>
+        <mat-cell *matCellDef="let track"><a (click)="preview(track)">{{track.name}}</a> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="uploadedBy">
+        <mat-header-cell *matHeaderCellDef mat-sort-header trans>Uploaded by</mat-header-cell>
+        <mat-cell *matCellDef="let track">{{track.uploaded_by.username || track.uploaded_by.email }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="artists">
+        <mat-header-cell *matHeaderCellDef trans>Artists</mat-header-cell>
+        <mat-cell *matCellDef="let track"> {{track.artists ? track.artists.join(', ') : '-'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef mat-sort-header trans>Duration</mat-header-cell>
+        <mat-cell *matCellDef="let track"> {{formatDuration(track.duration)}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let track">
+            <button mat-icon-button (click)="disapprove(track)" *ngIf="currentUser.hasPermission('admin')" matTooltip="Disapprove">
+                <mat-icon svgIcon="remove-circle"></mat-icon>
+            </button>
+            <button mat-icon-button (click)="approve(track)" *ngIf="currentUser.hasPermission('admin')" matTooltip="Approve">
+                <mat-icon svgIcon="check"></mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+</data-table>

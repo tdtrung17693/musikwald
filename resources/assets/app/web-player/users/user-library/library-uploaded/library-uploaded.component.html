@@ -1,0 +1,26 @@
+<div infinite-scroll (onInfiniteScroll)="loadMore()" [infiniteScrollEnabled]="canLoadMore()">
+    <filterable-page-header [filterQuery]="uploadedTracks.filterQuery">
+        <sorting-header [name]="uploadedTracks.order">
+            <div mat-menu-item (click)="uploadedTracks.sort('name')" trans>Name</div>
+            <div mat-menu-item (click)="uploadedTracks.sort('duration')" trans>Duration</div>
+            <div mat-menu-item (click)="uploadedTracks.sort('artist name')" trans>Artist Name</div>
+        </sorting-header>
+    </filterable-page-header>
+
+    <track-list
+        [tracks]="uploadedTracks.get()"
+        [showArtist]="true"
+        [showPopularity]="false"
+        [showAddedAt]="false"
+        [showAlbum]="false"
+        [contextMenuParams]="{type: 'uploadedTrack'}"
+        [handleContinuousPlayback]="false"
+        [queueItemId]="'library-uploaded-tracks'"
+    ></track-list>
+
+    <no-results-message *ngIf="!uploadedTracks.get().length">
+        <span primary-text trans>Nothing to display.</span>
+        <span secondary-text trans>You have not added any songs to your library yet.</span>
+    </no-results-message>
+</div>
+
