@@ -475,7 +475,6 @@ class CssThemeGenerator
             'selector' => ' .mat-menu-item'
         ];
 
-        // TODO: TEMP FOR BEMUSIC
         if (array_search('wp-bg-color-500', $this->variables) > -1) {
             $grouped['wp-bg-color-600']['background-color'][] = [
                 'selector' => '.auth-page .auth-panel, account-settings .panel',

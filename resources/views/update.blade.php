@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>BeMusic - Update</title>
+    <title>Musikwald - Update</title>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -26,7 +26,7 @@
     @else
         <form id="compat-check" class="step-panel" action="{{ url('secure/update/run') }}" method="post">
             {{ csrf_field() }}
-            
+
             <p>This might take several minutes, please don't close this browser tab while update is in progress.</p>
 
             <div class="center-buttons">
@@ -37,5 +37,5 @@
 </div>
 </body>
 </html>
-	
+
 

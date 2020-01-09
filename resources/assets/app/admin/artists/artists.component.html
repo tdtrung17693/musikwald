@@ -15,11 +15,6 @@
         <mat-cell *matCellDef="let artist"> {{artist.name}} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="popularity">
-        <mat-header-cell *matHeaderCellDef mat-sort-header="spotify_popularity" trans>Popularity</mat-header-cell>
-        <mat-cell *matCellDef="let artist"> {{artist.spotify_popularity}} </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="number_of_albums">
         <mat-header-cell *matHeaderCellDef trans>Number of Albums</mat-header-cell>
         <mat-cell *matCellDef="let artist"> {{artist['albums_count']}} </mat-cell>

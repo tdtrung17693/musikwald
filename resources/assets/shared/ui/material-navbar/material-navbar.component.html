@@ -1,7 +1,6 @@
 <div class="navbar-container" [class.container]="container">
     <a routerLink="/" class="logo-container">
-        <img class="logo" *ngIf="config.get('branding.logo_light')" [src]="config.getBaseUrl(true) + config.get('branding.logo_light')">
-        <div class="text-logo" *ngIf="!config.get('branding.logo_light')">{{config.get('branding.site_name')}}</div>
+        <img class="logo" [src]="config.getBaseUrl(true) + '/client/assets/images/logo-light.png'">
     </a>
 
     <button class="toggle-sidebar-button" mat-icon-button *ngIf="showToggleButton" (click)="toggleButtonClick.emit()">

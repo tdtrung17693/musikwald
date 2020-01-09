@@ -18,7 +18,7 @@
 <player-controls *ngIf="!state.isMobile"></player-controls>
 <mobile-player-controls *ngIf="state.isMobile"></mobile-player-controls>
 
-<fullscreen-overlay [class.mobile]="state.isMobile" ngClass="strategy-{{player.getPlaybackStrategy()}}" [class.hide-video]="shouldHideVideo" customScrollbar>
+<fullscreen-overlay style="display:none" [class.mobile]="state.isMobile" ngClass="strategy-{{player.getPlaybackStrategy()}}" [class.hide-video]="shouldHideVideo" customScrollbar>
     <div class="player-container youtube-player" id="youtube-player"></div>
     <div class="player-container html5-player">
         <div class="img-container">

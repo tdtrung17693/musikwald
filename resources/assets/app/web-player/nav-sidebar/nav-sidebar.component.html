@@ -1,6 +1,6 @@
 <div class="content" customScrollbar>
     <a class="logo-container" routerLink="/">
-        <img [src]="settings.getBaseUrl(true) + settings.get('branding.logo_light')">
+        <img class="logo" [src]="settings.getBaseUrl(true) + '/client/assets/images/logo-light.png'">
     </a>
 
     <form class="search-bar-container" (ngSubmit)="searchPanel.goToSearchPage()">
@@ -84,7 +84,28 @@
         </div>
         <div class="your-music-container">
             <div class="title" trans>Your Music</div>
-            <custom-menu position="sidebar-secondary" class="sidebar-nav"></custom-menu>
+            <div class="sidebar-nav">
+                <a class="nav-item custom-menu-item route-nav-item" routerLink="/library/songs" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon svgIcon="audiotrack"></mat-icon>
+                    <span class="text">Songs</span>
+                </a>
+                <a class="nav-item custom-menu-item route-nav-item" routerLink="/library/albums" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon svgIcon="album"></mat-icon>
+                    <span class="text">Albums</span>
+                </a>
+                <a class="nav-item custom-menu-item route-nav-item" routerLink="/library/artists" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon svgIcon="mic"></mat-icon>
+                    <span class="text">Artists</span>
+                </a>
+                <a class="nav-item custom-menu-item route-nav-item" routerLink="/library/uploaded-songs" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{exact: true}">
+                    <mat-icon svgIcon="audiotrack"></mat-icon>
+                    <span class="text">Uploaded Songs</span>
+                </a>
+            </div>
         </div>
 
         <div class="separator"></div>

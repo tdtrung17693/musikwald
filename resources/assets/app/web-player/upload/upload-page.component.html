@@ -16,12 +16,13 @@
         <div class="choose-file-btn mar-bottom-30">
             <input type="file" id="upload-song-input" accept="audio/*" multiple=""><label for="upload-song-input"><span>Select a file</span></label></div>
     </div>
+    <div class="upload-note">Supported formats: MP3. Max file size: 50MB.</div>
     <div class="upload-items" *ngIf="uploadItems.length > 0">
         <div class="items">
             <div *ngFor="let item of uploadItems" class="item">
                 <div class="item__header">
                     <div class="item__name">{{ item.track.name }}</div>
-                    <mat-icon aria-hidden="false" aria-label="Delete item" svgIcon="clear"></mat-icon>
+                    <mat-icon aria-hidden="false" *ngIf="!item.track.id" (click)="delete(item)" aria-label="Delete item" svgIcon="clear"></mat-icon>
                 </div>
                 <mat-progress-bar mode="determinate" [value]="item.queueItem.meta$.value.progress" color="accent"></mat-progress-bar>
                 <div class="item__content">
@@ -32,12 +33,12 @@
                         <form (ngSubmit)="confirm(item)" ngNativeValidate *ngIf="!item.track.id; else elseBlock">
                             <div class="input-container">
                                 <label for="track-name" trans>Name</label>
-                                <input type="text" name="name" [(ngModel)]="item.track.name" required>
+                                <input type="text" id="track-name" name="name" [(ngModel)]="item.track.name" required>
                                 <div class="error" *ngIf="item.errors.name">{{item.errors.name}}</div>
                             </div>
                             <div class="input-container media-autocomplete-input-container">
                                 <label for="track-artists">Artists</label>
-                                <input type="text" [formControl]="item.artistInput.formControl" [matAutocomplete]="artistAuto" placeholder="Search artists..." trans-placeholder>
+                                <input type="text" id="track-artists" [formControl]="item.artistInput.formControl" [matAutocomplete]="artistAuto" placeholder="Search artists..." trans-placeholder>
                                 <mat-chip-list #chipsList [selectable]="false">
                                     <mat-chip *ngFor="let artist of item.artistInput.attachedArtists" [removable]="true" (removed)="detachArtist(item, artist)">
                                         {{artist}}
@@ -69,7 +70,7 @@
             </div>
         </div>
         <div class="upload-items-footer">
-            <button class="btn-save-all">Save All</button>
+            <button class="btn-save-all" (click)="saveAll()" [disabled]="!canSaveAll()">Save All</button>
         </div>
     </div>
 </section>

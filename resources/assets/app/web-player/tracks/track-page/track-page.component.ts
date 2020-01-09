@@ -52,8 +52,14 @@ export class TrackPageComponent implements OnInit {
         if (this.player.cued(this.track)) {
             return this.player.play();
         }
+        let tracks;
+        if (this.track.album) {
+            tracks = this.getAlbumTracks();
+        } else {
+            tracks = [ this.track ];
+        }
 
-        this.player.overrideQueue({tracks: this.getAlbumTracks()}).then(() => {
+        this.player.overrideQueue({tracks}).then(() => {
             this.player.queue.select(this.track);
             this.player.play();
         });

@@ -4,6 +4,12 @@
     display: none;
 }
 
+.upload-note {
+    margin: 1rem;
+    font-size: 1.2rem;
+    color: #868686;
+}
+
 .upload-title {
     margin: 15px 20px 10px;
     padding-bottom: 10px;
@@ -35,7 +41,9 @@
     cursor: pointer;
 }
 
-.upload-items { margin-top: 30px; }
+.upload-items {
+    margin-top: 30px;
+}
 
 .upload-items-footer {
     text-align: right;

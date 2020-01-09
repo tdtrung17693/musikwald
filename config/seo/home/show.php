@@ -7,11 +7,11 @@ return [
     ],
     [
         'property' => 'og:title',
-        'content' => 'BeMusic - Listen to music for free.',
+        'content' => 'Musikwald - Just another music streaming site.',
     ],
     [
         'property' => 'og:description',
-        'content' => 'Find and listen to millions of songs, albums and artists, all completely free on BeMusic.',
+        'content' => 'Find and listen to millions of songs, albums and artists, all completely free on Musikwald.',
     ],
     [
         'property' => 'keywords',

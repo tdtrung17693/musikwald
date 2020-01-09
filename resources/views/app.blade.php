@@ -17,9 +17,9 @@
         var spinner = document.querySelector('.global-spinner');
         if (spinner) spinner.style.display = 'flex';
     }, 100);</script>
-		<script type="text/javascript" src="client/runtime.e8f4af4f8758214c18b5.js"></script>
+		<script type="text/javascript" src="client/runtime.a13b074ffeb6dbf895d3.js"></script>
 		<script type="text/javascript" src="client/polyfills.dc4f829dbbf1658d53f2.js"></script>
-		<script type="text/javascript" src="client/main.2af4b0e3eaf7be3258ef.js"></script>
+		<script type="text/javascript" src="client/main.f6ead5164d7cd626fe92.js"></script>
 	{{--angular scripts end--}}
 @endsection
 

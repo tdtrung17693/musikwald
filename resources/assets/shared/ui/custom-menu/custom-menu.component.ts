@@ -85,13 +85,6 @@ export class CustomMenuComponent implements OnInit, OnDestroy {
         // get stored custom menus
         const menus = JSON.parse(json);
         if ( ! menus) return this.shouldHide = true;
-        menus[1].items.push({
-            type: 'route',
-            order: 4,
-            action: '/library/uploaded-songs',
-            label: 'Uploaded Songs',
-            icon: 'audiotrack'
-        })
         // find first menu for specified position
         const menuConfig = menus.find(menu => menu.position === this.position);
         if ( ! menuConfig) return this.shouldHide = true;
