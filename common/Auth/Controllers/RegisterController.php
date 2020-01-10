@@ -71,10 +71,6 @@ class RegisterController extends Controller
             $params['confirmed'] = 0;
         }
 
-        $params["permissions"] = json_encode([
-            "tracks.create" => 1,
-            "files.create" => 1,
-        ]);
 
         $user = $this->create($params);
 
